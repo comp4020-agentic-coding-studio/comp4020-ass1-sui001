@@ -160,3 +160,17 @@ catching you out, a fact about the stack the agent keeps getting wrong --- write
 it down here. Growing this file is the work of harness engineering, and the gap
 between this boilerplate and your own version is part of what your prototype
 says about the developer you're becoming.
+
+## Project rules for Assignment 1
+
+- **Narrate setup and scripted steps before running them.** When about to run a
+  script or multi-step setup (timer loops, data generation, build steps), say
+  in a sentence what it's about to do and why, before running it --- not just
+  the raw command output. Silent execution is fine for quick, obvious commands;
+  narrate anything the visitor-facing behaviour of the prototype depends on
+  (e.g. how the reaction-time timer is measured, how the timeline stages are
+  sequenced).
+- **Keep the voice fun, a little sarcastic.** Both in how you talk to me during
+  the build and in the copy that ships on the page --- dry and neutral is not
+  the register for this project. Lean into the deadpan/wry tone when writing UI
+  copy, error states, and the framing text on the timeline.

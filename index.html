@@ -13,11 +13,25 @@
       </nav>
     </header>
     <main>
-      <h1>COMP4020 prototype</h1>
-      <p data-testid="intro">
-        Replace this with your prototype. This week's brief is on the course website;
-        <code>spec/README.md</code> explains how the checks in this repo relate to it.
-      </p>
+      <h1>Speed of Thought</h1>
+      <section id="reaction-test" aria-labelledby="reaction-heading">
+        <h2 id="reaction-heading">Round 1: how fast are you, really?</h2>
+        <p data-testid="reaction-readout" aria-live="polite">
+          Hit start. A dot will appear somewhere on the field below —
+          click it the instant you see it. We're timing you, and it gets
+          meaner as it goes.
+        </p>
+        <button type="button" data-testid="start-button">Start</button>
+        <div data-testid="play-field" id="play-field">
+          <button
+            type="button"
+            data-testid="dot-target"
+            id="dot-target"
+            hidden
+            aria-label="Click me"
+          ></button>
+        </div>
+      </section>
     </main>
     <script type="module" src="./main.ts"></script>
   </body>

@@ -107,3 +107,69 @@ function startGame() {
 
 dot?.addEventListener("click", onDotClick);
 startButton?.addEventListener("click", startGame);
+
+// Timeline — place the visitor's own reaction time among the other scales,
+// and highlight whichever stage is currently in view while scrolling.
+
+const STAGE_DURATIONS_MS: Record<string, number> = {
+  "deep-time": 13_800_000_000 * 365.25 * 24 * 60 * 60 * 1000,
+  galactic: 230_000_000 * 365.25 * 24 * 60 * 60 * 1000,
+  geological: 5_000_000 * 365.25 * 24 * 60 * 60 * 1000,
+  "plant-life": 12 * 60 * 60 * 1000,
+  "slow-animals": 3_000,
+  "fast-animals": 10,
+  computing: 0.0000003,
+};
+
+function placeVisitorInTimeline() {
+  const stored = localStorage.getItem(REACTION_STORAGE_KEY);
+  const visitorLi = document.querySelector<HTMLElement>(
+    '[data-testid="visitor-marker"]',
+  );
+  const durationEl = document.querySelector<HTMLElement>(
+    '[data-testid="visitor-duration"]',
+  );
+  const stagesList = document.querySelector<HTMLElement>(
+    '[data-testid="timeline-stages"]',
+  );
+  if (!stored || !visitorLi || !durationEl || !stagesList) return;
+
+  const avgMs = Number(stored);
+  durationEl.textContent = `~${avgMs.toFixed(0)} milliseconds (that's you)`;
+
+  // Find the first stage slower than the visitor's own reaction time and
+  // insert the visitor marker right before it — the list is already ordered
+  // slowest to fastest.
+  const otherStages = Array.from(
+    stagesList.querySelectorAll<HTMLElement>("[data-stage]"),
+  );
+  const nextSlowerStage = otherStages.find((el) => {
+    const duration = STAGE_DURATIONS_MS[el.dataset.stage ?? ""];
+    return duration !== undefined && duration < avgMs;
+  });
+
+  if (nextSlowerStage) {
+    stagesList.insertBefore(visitorLi, nextSlowerStage);
+  } else {
+    stagesList.appendChild(visitorLi);
+  }
+}
+
+placeVisitorInTimeline();
+
+const timelineItems = document.querySelectorAll<HTMLElement>(
+  '#timeline [data-stage], #timeline [data-testid="visitor-marker"]',
+);
+if (timelineItems.length && "IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        (entry.target as HTMLElement).dataset.active = String(
+          entry.isIntersecting,
+        );
+      }
+    },
+    { threshold: 0.6 },
+  );
+  timelineItems.forEach((el) => observer.observe(el));
+}

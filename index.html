@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COMP4020 prototype</title>
+    <title>Speed of Thought</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -31,6 +31,90 @@
             aria-label="Click me"
           ></button>
         </div>
+      </section>
+
+      <section id="timeline" aria-labelledby="timeline-heading">
+        <h2 id="timeline-heading">Every scale of thought, one scroll away</h2>
+        <p>
+          Everything responds to something, eventually. Scroll down and
+          watch the response times fall off a cliff — from continents to
+          your own twitching finger to a CPU that doesn't even know what
+          waiting means.
+        </p>
+        <ol data-testid="timeline-stages">
+          <li data-stage="deep-time">
+            <h3>Deep time</h3>
+            <p class="stage-duration">~13.8 billion years</p>
+            <p>
+              The universe's one and only reaction so far: expanding. Ask it
+              to hurry up and it will, technically, in another few billion
+              years.
+            </p>
+          </li>
+          <li data-stage="galactic">
+            <h3>Galactic</h3>
+            <p class="stage-duration">~230 million years</p>
+            <p>
+              One trip around the galactic centre. The sun has done this
+              about twenty times since it formed, which is either a lot or
+              nothing, depending on how it's feeling.
+            </p>
+          </li>
+          <li data-stage="geological">
+            <h3>Geological</h3>
+            <p class="stage-duration">~1–10 million years</p>
+            <p>
+              A mountain range rises about as fast as your fingernails grow.
+              Erosion is patient. Continents are patient. You are not.
+            </p>
+          </li>
+          <li data-stage="plant-life">
+            <h3>Plant life</h3>
+            <p class="stage-duration">~hours to days</p>
+            <p>
+              A sunflower turning to face the sun, a vine finding a trellis —
+              plants do react, they just refuse to be rushed about it.
+            </p>
+          </li>
+          <li data-stage="slow-animals">
+            <h3>Slow animals</h3>
+            <p class="stage-duration">~1–5 seconds</p>
+            <p>
+              A sloth deciding to move. A starfish deciding anything. Glacial
+              by animal standards, geological by yours.
+            </p>
+          </li>
+          <li
+            data-testid="visitor-marker"
+            id="visitor-marker"
+            class="stage visitor-stage"
+          >
+            <h3>You</h3>
+            <p class="stage-duration" data-testid="visitor-duration">
+              Play the test above to find out.
+            </p>
+            <p>
+              Somewhere between the sloth and the housefly, probably. Go
+              click some dots and we'll place you properly.
+            </p>
+          </li>
+          <li data-stage="fast-animals">
+            <h3>Fast animals</h3>
+            <p class="stage-duration">~2–20 milliseconds</p>
+            <p>
+              A mantis shrimp's strike, a housefly's escape. Faster than you
+              can decide to be impressed by it.
+            </p>
+          </li>
+          <li data-stage="computing">
+            <h3>Computing</h3>
+            <p class="stage-duration">~0.0000003 milliseconds</p>
+            <p>
+              One clock cycle on a modern CPU. It has already finished before
+              your eye has finished blinking, several thousand times over.
+            </p>
+          </li>
+        </ol>
       </section>
     </main>
     <script type="module" src="./main.ts"></script>

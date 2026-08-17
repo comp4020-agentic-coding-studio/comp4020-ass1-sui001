@@ -117,7 +117,8 @@ const STAGE_DURATIONS_MS: Record<string, number> = {
   geological: 5_000_000 * 365.25 * 24 * 60 * 60 * 1000,
   "plant-life": 12 * 60 * 60 * 1000,
   "slow-animals": 3_000,
-  "fast-animals": 10,
+  "venus-flytrap": 100,
+  "fast-animals": 2.7,
   computing: 0.0000003,
 };
 
@@ -157,19 +158,39 @@ function placeVisitorInTimeline() {
 
 placeVisitorInTimeline();
 
+// Powers-of-Ten-style zoom: each stage's icon scales up as it nears the
+// centre of the viewport and shrinks away as you scroll past it, so images
+// grow and shrink continuously as you move through them.
 const timelineItems = document.querySelectorAll<HTMLElement>(
   '#timeline [data-stage], #timeline [data-testid="visitor-marker"]',
 );
-if (timelineItems.length && "IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        (entry.target as HTMLElement).dataset.active = String(
-          entry.isIntersecting,
-        );
-      }
-    },
-    { threshold: 0.6 },
-  );
-  timelineItems.forEach((el) => observer.observe(el));
+
+function updateTimelineZoom() {
+  const viewportCenter = window.innerHeight / 2;
+  for (const li of timelineItems) {
+    const icon = li.querySelector<HTMLElement>(".stage-icon");
+    if (!icon) continue;
+    const rect = li.getBoundingClientRect();
+    const stageCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(stageCenter - viewportCenter);
+    const closeness = Math.max(0, 1 - distance / (window.innerHeight * 0.7));
+    const scale = 0.5 + closeness * 1.5;
+    icon.style.transform = `scale(${scale.toFixed(3)})`;
+    li.dataset.active = String(closeness > 0.5);
+  }
+}
+
+if (timelineItems.length) {
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateTimelineZoom();
+      ticking = false;
+    });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  updateTimelineZoom();
 }

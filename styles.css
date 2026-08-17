@@ -61,25 +61,32 @@ a {
 }
 
 [data-testid="timeline-stages"] > li {
-  padding: 3rem 1.5rem;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 4rem 1.5rem;
+  margin-bottom: 2rem;
   border-radius: 0.5rem;
   background: #f3f3f3;
-  opacity: 0.5;
-  transform: scale(0.98);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    background 0.3s ease;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
 }
 
 [data-testid="timeline-stages"] > li[data-active="true"] {
   opacity: 1;
-  transform: scale(1);
 }
 
 [data-testid="timeline-stages"] > li h3 {
   margin: 0 0 0.25rem;
+}
+
+.stage-icon {
+  width: 6rem;
+  height: 6rem;
+  transition: transform 0.05s linear;
+  will-change: transform;
 }
 
 .stage-duration {

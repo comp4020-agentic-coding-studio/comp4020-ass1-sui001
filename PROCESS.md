@@ -1,74 +1,47 @@
 # Process overview
 
-<!-- TEMPLATE: this file is a shape to fill in, not a form. Replace everything
-     in it with your own overview, and delete this comment — `pnpm
-     check:evidence` will remind you if it's still here. -->
-
-A reading-guide to how the work came together --- a map to your process, not an
-essay about it. Markers read this file and follow its citations; they don't
-trawl the repo for evidence you didn't point at, so if a moment mattered, cite
-it.
-
-This file is the shape; the course site's
-[assessment page](https://comp.anu.edu.au/courses/comp4020-agentic-coding-studio/topics/assessment/#what-you-submit)
-is the requirement, and each brief adds its own word count and moment count.
-
 ## What I built
 
-One paragraph: the thing, and the idea behind it.
+A single-page "scale of time" prototype: a click-the-dot reaction-time test
+that measures your own reflexes, followed by a Powers-of-Ten-style scrolling
+timeline that places your reaction time among real, researched biological and
+computational timescales — from a Venus flytrap snap down to a single CPU
+cycle.
 
 ## The moments that mattered
 
-Three or four for an assignment; fewer is fine for a weekly prototype. Keep the
-list short so each moment has room to do all four jobs:
+1. **Turning the spec into failing tests before building anything.** The
+   starter repo shipped with a worked-example test file that didn't test my
+   prototype at all. Instead of writing the reaction-time and timeline
+   features first and testing after, I replaced the starter test with contract
+   tests for both — deliberately red, since neither feature existed yet — so
+   the two features had a fixed target instead of "does this look done to me."
+   [`aebf8c7`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-sui001/commit/aebf8c731c8f05d76f40af6d092887ded1b73a3c)
 
-1. **what happened** --- the problem, or the thing the agent got wrong
-2. **what you did instead of the obvious thing** --- the call you made, and why
-   it beat the obvious one
-3. **how you knew it was right** --- the check you ran, the viewport you looked
-   at, what you read before accepting the diff
-4. **the citation** --- a commit or commit range, a `CLAUDE.md` change, a check
-   that went from red to green, a prompt paired with the commit it produced
+2. **Building the reaction-time test against those tests, not against my own
+   eyeballing of the page.** The dot spawns at random positions, speeds up
+   over eight rounds, and stores the average to `localStorage` for the
+   timeline to consume later. I knew it was right when the first two
+   assertions in `spec/assignment-1.test.ts` flipped from red to green rather
+   than because the page looked plausible.
+   [`e4d31a1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-sui001/commit/e4d31a109f5b0d61475c1a9480a057f1b508e4e8)
 
-Jobs 2 and 3 are the ones the repo can't tell a reader on its own, so they're
-where the marks are. The strongest moments are the ones where a correction
-landed in the **harness** rather than in another prompt --- a rule added to
-`CLAUDE.md`, a check wired up, an attempt thrown away: re-prompting until it
-passes is the routine case, and changing what the agent works against is the
-skilled one.
+3. **Wiring the timeline to insert the visitor's own result and complete the
+   spec.** Static ordered stages from deep time down to computing, with
+   scroll-driven active-stage highlighting, and the visitor's own reaction
+   average inserted at the correct point in the sequence. This is what took
+   the suite from 2/4 to 19/19 passing.
+   [`d297694`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-sui001/commit/d2976946757e73b1bb38dea86ceb624d45f6d376)
 
-Cite each moment as a link whose text is the commit hash or range and whose
-target is this repo's commit or compare URL, so a reader clicks straight to the
-evidence:
-
-- one commit: [`a1b2c3d`](https://github.com/YOUR-ORG/YOUR-REPO/commit/a1b2c3d)
-- a range:
-  [`a1b2c3d...e4f5a6b`](https://github.com/YOUR-ORG/YOUR-REPO/compare/a1b2c3d...e4f5a6b)
-
-To pair a prompt with the commit it produced, quote the prompt (curated, not a
-full transcript) next to the citation:
-
-> the prompt, verbatim
-
-Screenshots are welcome where one carries the verification better than a
-sentence does. Commit the file to this repo and link it with a **relative**
-path, which is what makes it render on GitHub: `![alt text](docs/before.png)`.
-Images don't count towards the word count and don't replace the citation.
-
-### A worked moment, for shape
-
-Delete this section along with the rest of the boilerplate --- it's here to show
-the four jobs in one paragraph, not to be imitated in content.
-
-> The date formatter kept coming back with `toLocaleDateString()` and no locale
-> argument, so the same build rendered differently on my machine and in CI. I'd
-> already re-prompted it twice, which fixed the line but not the habit, so the
-> third time I put the rule in `CLAUDE.md` instead
-> ([`3f9ac21`](https://github.com/YOUR-ORG/YOUR-REPO/commit/3f9ac21)) and added
-> a spec test that fails on a bare `toLocaleDateString`. That's what told me it
-> had actually taken: the test went red against the old code and green against
-> the new, and the next two features it wrote passed it without prompting
-> ([`3f9ac21...b7e0d14`](https://github.com/YOUR-ORG/YOUR-REPO/compare/3f9ac21...b7e0d14)).
+4. **Replacing guessed timescale numbers with real, cited research instead of
+   shipping plausible-looking placeholders.** The first pass at the timeline
+   used rough, made-up figures for things like a Venus flytrap's snap speed. I
+   didn't accept that as done just because the page rendered — I went back and
+   replaced every guessed figure with a real cited value (Venus flytrap 100ms,
+   Forterre et al. *Nature* 2005; mantis shrimp strike 2.7ms; trap-jaw ant bite
+   0.13ms), and turned the static list into a continuous scroll-zoom closer to
+   the Eames reference, so scale is felt rather than just read.
+   [`018d34a`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-sui001/commit/018d34a9eff7d8e9b4d96cef0400568f0faa3151)
 
 ## Before you ship
 
